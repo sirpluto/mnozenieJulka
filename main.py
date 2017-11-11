@@ -79,9 +79,46 @@ def ile_pkt(start, stop):
         ilePkt = 5
     return ilePkt
 
+def losuj_dzialanie():
+    tmp = random.randint(1, 100)
+    if (tmp%2 == 0):
+        wynik = '*'
+    else:
+        wynik = '/'
+
+    wynik = '/'
+    return wynik
+
+def losuj_liczby(dzialanie):
+    if (dzialanie == '*'):
+        a = random.randint(minLiMnozenie, maxLiMnozenie)
+        b = random.randint(minLiMnozenie, maxLiMnozenie)
+    else: #dzielenie
+        a = 2
+        b = 3
+        while ((a%b != 0) or (a / b > 10)):
+            a = random.randint(minLiADzielenie, maxLiADzielenie)
+            b = random.randint(minLiBDzielenie, maxLiBDzielenie)
+    wynik_tmp = a / b
+    return a, b
+
+
+def oblicz_wynik(a, b, dzialanie):
+    if (dzialanie == '*'):
+        wynik = a * b
+    elif (dzialanie == '/'):
+        wynik = a / b
+    else:
+        print("Bledne dzialanie w oblicz_wynik()")
+    return wynik
+
 maxOk = 200
-maxLi =   9
-minLi =   2
+maxLiMnozenie   =   9
+minLiMnozenie   =   2
+maxLiADzielenie =   100
+minLiADzielenie =   2
+maxLiBDzielenie =   9
+minLiBDzielenie =   2
 a     =   0
 b     =   0
 ileOk =   0
@@ -90,17 +127,18 @@ while ileOk < maxOk:
     czysc_ekran()
     print("Pozostało {} poprawna odpowiedzi aby otrzymac nagrode".format(maxOk-ileOk))
     print('' *10)
-    a = random.randint(minLi, maxLi)
-    b = random.randint(minLi, maxLi)
-    print("Podaj wynik mnozenia {}*{}".format(a, b))
+    dzialanie = losuj_dzialanie()
+    a, b = losuj_liczby(dzialanie)
+    print("Podaj wynik mnozenia {}{}{}".format(a, dzialanie, b))
     timeStart = time.perf_counter()
     wynik = wczytaj_wynik()
     timeStop = time.perf_counter()
-    if (wynik == a*b):
+    if (wynik == oblicz_wynik(a, b, dzialanie)):
         ileOk += ile_pkt(timeStart, timeStop)
         separator_print()
     else:
-        roznica = wynik - (a*b)
+        #TODO: dodać obsługę dzielenia
+        roznica = wynik - oblicz_wynik(a, b, dzialanie)
         if (roznica >= 9 or roznica <= -9):
             print("Duzy blad :( - punk karny")
             ileOk -= 1
