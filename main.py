@@ -86,7 +86,6 @@ def losuj_dzialanie():
     else:
         wynik = '/'
 
-    wynik = '/'
     return wynik
 
 def losuj_liczby(dzialanie):
@@ -110,6 +109,48 @@ def oblicz_wynik(a, b, dzialanie):
         wynik = a / b
     else:
         print("Bledne dzialanie w oblicz_wynik()")
+    return wynik
+
+def nauka_mnozenia(a, b):
+    wynik = 0
+
+    print("Sprobujmy cos latwiejszego :)")
+    for i in range(1, b+1):
+        print("Podaj wynik mnozenia {}*{}".format(a, i))
+        wynik = wczytaj_wynik()
+        if (wynik == a*i):
+            print("Brawo")
+        else:
+            print(":(")
+            print("Prawidlowa odpowiedz to: {}".format(a*i))
+    print("Teraz znasz juz odpowiedz na {}*{}".format(a,b))
+    wynik = wczytaj_wynik()
+    if (wynik == a*b):
+        print("Brawo")
+        wynik = 1;
+    else:
+        print("Sprobjemy inne dzialanie")
+    return wynik
+1
+def nauka_dzielenia(a, b):
+    wynik = 0
+
+    c = a/b;
+    print("Podaj wynik mnozenia {}*{}".format(b, int(c)))
+    wynik = wczytaj_wynik();
+    if (wynik == b*c):
+        print("Brawo :)")
+    else:
+        print(":(")
+        print("Prawidłowa odpowież to: []".format(b*c))
+    print("Teraz znasz juz odpowiedz na {}/{}".format(a, b))
+    wynik = wczytaj_wynik()
+    if (wynik == a/b):
+        print("Brawo")
+        wynik = 1;
+    else:
+        print("Spróbujemy inne działanie")
+
     return wynik
 
 maxOk = 200
@@ -142,22 +183,12 @@ while ileOk < maxOk:
         if (roznica >= 9 or roznica <= -9):
             print("Duzy blad :( - punk karny")
             ileOk -= 1
-        print("Sprobujmy cos latwiejszego :)")
-        for i in range(1, b+1):
-            print("Podaj wynik mnozenia {}*{}".format(a, i))
-            wynik = wczytaj_wynik()
-            if (wynik == a*i):
-                print("Brawo")
-            else:
-                print(":(")
-                print("Prawidlowa odpowiedz to: {}".format(a*i))
-        print("Teraz znasz juz odpowiedz na {}*{}".format(a,b))
-        wynik = wczytaj_wynik()
-        if (wynik == a*b):
-            print("Brawo")
-            ileOk += 1
+        if (dzialanie == '*'):
+            #nauka mnożenia
+            ileOk += nauka_mnozenia(a, b)
         else:
-            print("Sprobjemy inne dzialanie")
+            #nauka dzielenia
+            ileOk +=nauka_dzielenia(a,b)
         separator_print()
 p = run_game()
 time.sleep(600)
