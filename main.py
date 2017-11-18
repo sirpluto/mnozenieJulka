@@ -16,7 +16,10 @@ nagrody = {1  : ["Barbie w świecie mody",                   "https://www.youtub
            9  : ["Barbie i Akademia Księżniczek",           "https://www.youtube.com/watch?v=iiij2ApJg_c"],
            10 : ["WIELKI WYŚCIG ",                          "https://www.youtube.com/watch?v=ISnS0z4TkHk&t=443s"],
            11 : ["DZIECIAKI MOJEJ SIOSTRY W AFRYCE",        "https://www.youtube.com/watch?v=g96u-yBL1-s"],
-           12 : ["DZIECI Z BULLERBYN ",                     "https://www.youtube.com/watch?v=yVgSgxtqjNU"],}
+           12 : ["DZIECI Z BULLERBYN ",                     "https://www.youtube.com/watch?v=yVgSgxtqjNU"],
+           13 : ["Beethoven",                               "https://www.cda.pl/video/51526636"],
+           14 : ["Dzieciak rządzi ",                        "https://www.cda.pl/video/14296411e"],
+           }
 
 webBrowser = {"win"   : "start microsoft-edge:",
               "mac"   : "open -a safari ",
@@ -154,6 +157,7 @@ def nauka_dzielenia(a, b):
     return wynik
 
 maxOk = 200
+czasNagrody = 600;
 maxLiMnozenie   =   9
 minLiMnozenie   =   2
 maxLiADzielenie =   100
@@ -178,9 +182,8 @@ while ileOk < maxOk:
         ileOk += ile_pkt(timeStart, timeStop)
         separator_print()
     else:
-        #TODO: dodać obsługę dzielenia
         roznica = wynik - oblicz_wynik(a, b, dzialanie)
-        if (roznica >= 9 or roznica <= -9):
+        if (roznica >= 3 or roznica <= -3):
             print("Duzy blad :( - punk karny")
             ileOk -= 1
         if (dzialanie == '*'):
@@ -191,7 +194,7 @@ while ileOk < maxOk:
             ileOk +=nauka_dzielenia(a,b)
         separator_print()
 p = run_game()
-time.sleep(600)
+time.sleep(czasNagrody)
 stop_game(p)
 
 #print(p)
