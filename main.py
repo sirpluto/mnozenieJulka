@@ -18,7 +18,9 @@ nagrody = {1  : ["Barbie w świecie mody",                   "https://www.youtub
            11 : ["DZIECIAKI MOJEJ SIOSTRY W AFRYCE",        "https://www.youtube.com/watch?v=g96u-yBL1-s"],
            12 : ["DZIECI Z BULLERBYN ",                     "https://www.youtube.com/watch?v=yVgSgxtqjNU"],
            13 : ["Beethoven",                               "https://www.cda.pl/video/51526636"],
-           14 : ["Dzieciak rządzi ",                        "https://www.cda.pl/video/14296411e"],
+           14 : ["Dzieciak rządzi",                         "https://www.cda.pl/video/14296411e"],
+           15 : ["Kacper / Casper",                         "https://www.cda.pl/video/1110078ea"],
+
            }
 
 webBrowser = {"win"   : "start microsoft-edge:",
@@ -157,7 +159,7 @@ def nauka_dzielenia(a, b):
     return wynik
 
 maxOk = 200
-czasNagrody = 600;
+czasNagrody = 900;
 maxLiMnozenie   =   9
 minLiMnozenie   =   2
 maxLiADzielenie =   100
