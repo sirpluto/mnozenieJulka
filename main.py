@@ -5,23 +5,22 @@ import subprocess
 import time
 import sys
 
-nagrody = {1  : ["Barbie w świecie mody",                   "https://www.youtube.com/watch?v=8zHVfRTNkrA"],
+nagrody = {1  : ["Barbie w świecie mody",                   "https://www.youtube.com/watch?v=P0oaTAuzB70"],
            2  : ["Barbie i Jej Siostry w Krainie Kucyków",  "https://www.youtube.com/watch?v=oMeH-3IZ04o"],
            3  : ["Barbie: Tajne agentki",                   "https://www.youtube.com/watch?v=tE5tYShcAs0"],
            4  : ["Barbie w świecie gier ",                  "https://www.youtube.com/watch?v=GLbJH6E-8BQ"],
            5  : ["Barbie i Tajemnicze Drzwi",               "https://www.youtube.com/watch?v=1dwxBP0zed4"],
-           6  : ["Barbie: Tajne agentki",                   "https://www.youtube.com/watch?v=tE5tYShcAs0&t=2s"],
-           7  : ["Barbie i Jej Siostry w Krainie Kucyków ", "https://www.youtube.com/watch?v=oMeH-3IZ04o&t=1s"],
-           8  : ["Barbie i magiczne baletki",               "https://www.youtube.com/watch?v=G0W3p0mrHK0"],
-           9  : ["Barbie i Akademia Księżniczek",           "https://www.youtube.com/watch?v=iiij2ApJg_c"],
-           10 : ["WIELKI WYŚCIG ",                          "https://www.youtube.com/watch?v=ISnS0z4TkHk&t=443s"],
-           11 : ["DZIECIAKI MOJEJ SIOSTRY W AFRYCE",        "https://www.youtube.com/watch?v=g96u-yBL1-s"],
-           12 : ["DZIECI Z BULLERBYN ",                     "https://www.youtube.com/watch?v=yVgSgxtqjNU"],
-           13 : ["Beethoven",                               "https://www.cda.pl/video/51526636"],
-           14 : ["Dzieciak rządzi",                         "https://www.cda.pl/video/14296411e"],
-           15 : ["Kacper / Casper",                         "https://www.cda.pl/video/1110078ea"],
-           16 : ["Zwierzogród",                             "http://ekino-tv.pl/movie/show/zwierzogrod-hd-zootopia-2016-dubbing/15191"]
-
+           6  : ["Barbie i magiczne baletki",               "https://www.youtube.com/watch?v=G0W3p0mrHK0"],
+           7  : ["Barbie i Akademia Księżniczek",           "https://www.youtube.com/watch?v=iiij2ApJg_c"],
+           8  : ["WIELKI WYŚCIG ",                          "https://www.youtube.com/watch?v=ISnS0z4TkHk&t=443s"],
+           9  : ["DZIECIAKI MOJEJ SIOSTRY W AFRYCE",        "https://www.youtube.com/watch?v=g96u-yBL1-s"],
+           10 : ["DZIECI Z BULLERBYN ",                     "https://www.youtube.com/watch?v=yVgSgxtqjNU"],
+           11 : ["Beethoven",                               "https://www.cda.pl/video/51526636"],
+           12 : ["Dzieciak rządzi",                         "https://www.cda.pl/video/14296411e"],
+           13 : ["Kacper / Casper",                         "https://www.cda.pl/video/1110078ea"],
+           14 : ["Zwierzogród",                             "http://ekino-tv.pl/movie/show/zwierzogrod-hd-zootopia-2016-dubbing/15191"],
+           15 : ["High School Musical",                     "https://www.cda.pl/video/561057e7"],
+           16 : ["Asterix misja Kleopatra",                 "https://www.cda.pl/video/138914f6"],
            }
 
 webBrowser = {"win"   : "start microsoft-edge:",
