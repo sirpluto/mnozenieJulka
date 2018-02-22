@@ -177,7 +177,10 @@ while ileOk < maxOk:
     print('' *10)
     dzialanie = losuj_dzialanie()
     a, b = losuj_liczby(dzialanie)
-    print("Podaj wynik mnozenia {}{}{}".format(a, dzialanie, b))
+    if (dzialanie == '*'):
+        print("Podaj wynik mnozenia {}{}{}".format(a, dzialanie, b))
+    else:
+        print("Podaj wynik dzielenia {}{}{}".format(a, dzialanie, b))
     timeStart = time.perf_counter()
     wynik = wczytaj_wynik()
     timeStop = time.perf_counter()
