@@ -21,6 +21,7 @@ nagrody = {1  : ["Barbie w świecie mody",                   "https://www.youtub
            14 : ["Zwierzogród",                             "http://ekino-tv.pl/movie/show/zwierzogrod-hd-zootopia-2016-dubbing/15191"],
            15 : ["High School Musical",                     "https://www.cda.pl/video/561057e7"],
            16 : ["Asterix misja Kleopatra",                 "https://www.cda.pl/video/138914f6"],
+           17 : ["Emoticon",                                "https://www.cda.pl/video/1756135c3"],
            }
 
 webBrowser = {"win"   : "start microsoft-edge:",
