@@ -142,7 +142,7 @@ def nauka_dzielenia(a, b):
     wynik = 0
 
     c = a/b;
-    print("Podaj wynik mnozenia {}*{}".format(b, int(c)))
+    print("Podaj wynik dzielenia {}*{}".format(b, int(c)))
     wynik = wczytaj_wynik();
     if (wynik == b*c):
         print("Brawo :)")
