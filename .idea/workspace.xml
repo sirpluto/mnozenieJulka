@@ -1,14 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="004c5c94-d282-4854-8a01-3c59d4192d38" name="Default" comment="aktualizacja listy nagrod - nowa pozycja Emoticon">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/menu.ui" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/play_sound.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/przyklad.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/runda.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/utils.py" />
+    <list default="true" id="004c5c94-d282-4854-8a01-3c59d4192d38" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -370,7 +364,14 @@
       <option name="project" value="LOCAL" />
       <updated>1519325177069</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="GUI">
+      <created>1569358971314</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1569358971314</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -414,7 +415,8 @@
     <MESSAGE value="dodanie nowej nagrody kacper + zmiana czasu nagrody na 15min" />
     <MESSAGE value="aktualizacja listy nagrod" />
     <MESSAGE value="aktualizacja listy nagrod - nowa pozycja Emoticon" />
-    <option name="LAST_COMMIT_MESSAGE" value="aktualizacja listy nagrod - nowa pozycja Emoticon" />
+    <MESSAGE value="GUI" />
+    <option name="LAST_COMMIT_MESSAGE" value="GUI" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
