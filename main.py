@@ -1,211 +1,146 @@
-import random
-import os
-#import webbrowser
-import subprocess
+try:
+    import tkinter as tk
+    from tkinter import messagebox
+except:
+    import Tkinter as tk
+    import tkMessageBox as messagebox
+
+import pygubu
+import runda
+import przyklad
 import time
-import sys
+import play_sound
+import utils
 
-nagrody = {1  : ["Barbie w świecie mody",                   "https://www.youtube.com/watch?v=P0oaTAuzB70"],
-           2  : ["Barbie i Jej Siostry w Krainie Kucyków",  "https://www.youtube.com/watch?v=oMeH-3IZ04o"],
-           3  : ["Barbie: Tajne agentki",                   "https://www.youtube.com/watch?v=tE5tYShcAs0"],
-           4  : ["Barbie w świecie gier ",                  "https://www.youtube.com/watch?v=GLbJH6E-8BQ"],
-           5  : ["Barbie i Tajemnicze Drzwi",               "https://www.youtube.com/watch?v=1dwxBP0zed4"],
-           6  : ["Barbie i magiczne baletki",               "https://www.youtube.com/watch?v=G0W3p0mrHK0"],
-           7  : ["Barbie i Akademia Księżniczek",           "https://www.youtube.com/watch?v=iiij2ApJg_c"],
-           8  : ["WIELKI WYŚCIG ",                          "https://www.youtube.com/watch?v=ISnS0z4TkHk&t=443s"],
-           9  : ["DZIECIAKI MOJEJ SIOSTRY W AFRYCE",        "https://www.youtube.com/watch?v=g96u-yBL1-s"],
-           10 : ["DZIECI Z BULLERBYN ",                     "https://www.youtube.com/watch?v=yVgSgxtqjNU"],
-           11 : ["Beethoven",                               "https://www.cda.pl/video/51526636"],
-           12 : ["Dzieciak rządzi",                         "https://www.cda.pl/video/14296411e"],
-           13 : ["Kacper / Casper",                         "https://www.cda.pl/video/1110078ea"],
-           14 : ["Zwierzogród",                             "http://ekino-tv.pl/movie/show/zwierzogrod-hd-zootopia-2016-dubbing/15191"],
-           15 : ["High School Musical",                     "https://www.cda.pl/video/561057e7"],
-           16 : ["Asterix misja Kleopatra",                 "https://www.cda.pl/video/138914f6"],
-           17 : ["Emoticon",                                "https://www.cda.pl/video/1756135c3"],
-           }
+class MyApplication(pygubu.TkApplication):
 
-webBrowser = {"win"   : "start microsoft-edge:",
-              "mac"   : "open -a safari ",
-              "linux" : "open"}
+    def _create_ui(self):
+        #1: Create a builder
+        self.builder = builder = pygubu.Builder()
 
+        #2: Load an ui file
+        builder.add_from_file('menu.ui')
 
-def ver_os():
-    platform = sys.platform
-    if platform == "linux" or platform == "linux2":
-        return "linux"
-    elif platform == "darwin":
-        return "mac"
-    elif platform == "win32":
-        return "win"
+        #3: Create the widget using self.master as parent
+        self.mainwindow = builder.get_object('mainwindow', self.master)
 
+        # Set main menu
+        self.mainmenu = menu = builder.get_object('mainmenu', self.master)
+        self.set_menu(menu)
 
-def run_game():
-    #webbrowser.open_new("https://www.youtube.com/watch?v=pt35aFuCaW8")
-    #os.system("start microsoft-edge:https://www.youtube.com/watch?v=kC50nvw9xXI")
-    for nr in nagrody:
-        print(str(nr) + " : " + nagrody[nr][0])
-    wybor = int(input("Wybierz nagrode: "))
+        # Configure callbacks
+        builder.connect_callbacks(self)
 
-    proc = subprocess.Popen(str(webBrowser[ver_os()] + nagrody[wybor][1]), shell = True)
-    return proc
+        # Set runda
+        self.runda = None
 
-def stop_game(proc):
-    proc.terminate()
-    print(proc.pid)
-    os.kill(proc.pid, 0)
-    if (ver_os() == "win"):
-        os.system("Taskkill /IM MicrosoftEdge.exe /F")
-    elif (ver_os() == "mac"):
-        os.system("killall Safari")
+        self.lista_a = []
+        self.lista_b = []
+        self.lissta_oper = []
 
+    def click_on_wyjdz(self, itemid):
+        if itemid == 'mopt_wyjdz':
+            messagebox.showinfo('Wyjdz', 'Do zobaczenia.')
+            self.quit()
 
-def separator_print():
-    print('=' * 60)
+    def click_on_nowa_runda(self, itemid):
+        if itemid == 'mopt_nowa_runda':
+            messagebox.showinfo('Nowa runda', 'Czas rozpoczac nowa runde')
+            ile_pkt_nagroda = 200
+            ile_pkt_szybka_odpowiedz = 5
+            czas_szybka_odpowiedz = 10
+            roznica_duzy_blad = 3
+            ile_pkt_duzy_blad = 4
 
+            self.lista_a = []
+            self.lista_b = []
+            self.lista_oper = []
 
-def czysc_ekran():
-    if (ver_os() == "win"):
-        os.system("cls")
-    else: #mac and linux
-        os.system('clear')
+            self.runda = runda.Runda(ile_pkt_nagroda, ile_pkt_szybka_odpowiedz,
+                                     czas_szybka_odpowiedz, roznica_duzy_blad, ile_pkt_duzy_blad)
+            self.wyswietl_label_top(self.runda.komunikat())
+            self.generuj_przyklad()
 
+    def click_on_o_programie(self):
+        messagebox.showinfo('O programie', 'To jest prgram dla Julki')
 
-def wczytaj_wynik():
-    try:
-        wynik = int(input("="))
-    except ValueError:
-        wynik = 0
-    return wynik
+    def click_on_nagroda(self):
+        if not self.runda.czy_nagroda():
+            return
+        czasNagrody = 9;
+        p = utils.run_game()
+        time.sleep(czasNagrody)
+        utils.stop_game(p)
+        self.runda.set_normal()
 
+    def click_on_sprawdz(self):
+        timeStop = time.perf_counter()
+        wynik_uzytkownika = self.wczytaj_wynik()
+        self.runda.aktualizuj(wynik_uzytkownika, self.dzialanie.wynik, timeStop - self.timeStart)
+        self.wyswietl_label_top(self.runda.komunikat())
 
-def ile_pkt(start, stop):
-    ilePkt = 1
-    czasTmp = stop - start
-    if (czasTmp < 10):
-        ilePkt = 5
-    return ilePkt
+        if not self.lista_a:
+            self.runda.set_normal()
 
-def losuj_dzialanie():
-    tmp = random.randint(1, 100)
-    if (tmp%2 == 0):
-        wynik = '*'
-    else:
-        wynik = '/'
-
-    return wynik
-
-def losuj_liczby(dzialanie):
-    if (dzialanie == '*'):
-        a = random.randint(minLiMnozenie, maxLiMnozenie)
-        b = random.randint(minLiMnozenie, maxLiMnozenie)
-    else: #dzielenie
-        a = 2
-        b = 3
-        while ((a%b != 0) or (a / b > 10)):
-            a = random.randint(minLiADzielenie, maxLiADzielenie)
-            b = random.randint(minLiBDzielenie, maxLiBDzielenie)
-    wynik_tmp = a / b
-    return a, b
-
-
-def oblicz_wynik(a, b, dzialanie):
-    if (dzialanie == '*'):
-        wynik = a * b
-    elif (dzialanie == '/'):
-        wynik = a / b
-    else:
-        print("Bledne dzialanie w oblicz_wynik()")
-    return wynik
-
-def nauka_mnozenia(a, b):
-    wynik = 0
-
-    print("Sprobujmy cos latwiejszego :)")
-    for i in range(1, b+1):
-        print("Podaj wynik mnozenia {}*{}".format(a, i))
-        wynik = wczytaj_wynik()
-        if (wynik == a*i):
-            print("Brawo")
+        if wynik_uzytkownika == self.dzialanie.wynik:
+            play_sound.play_random_happy()
+            self.generuj_przyklad()
         else:
-            print(":(")
-            print("Prawidlowa odpowiedz to: {}".format(a*i))
-    print("Teraz znasz juz odpowiedz na {}*{}".format(a,b))
-    wynik = wczytaj_wynik()
-    if (wynik == a*b):
-        print("Brawo")
-        wynik = 1;
-    else:
-        print("Sprobjemy inne dzialanie")
-    return wynik
-1
-def nauka_dzielenia(a, b):
-    wynik = 0
+            play_sound.play_random_sad()
+            self.generuj_nauke()
+            self.generuj_przyklad()
 
-    c = a/b;
-    print("Podaj wynik dzielenia {}*{}".format(b, int(c)))
-    wynik = wczytaj_wynik();
-    if (wynik == b*c):
-        print("Brawo :)")
-    else:
-        print(":(")
-        print("Prawidłowa odpowież to: []".format(b*c))
-    print("Teraz znasz juz odpowiedz na {}/{}".format(a, b))
-    wynik = wczytaj_wynik()
-    if (wynik == a/b):
-        print("Brawo")
-        wynik = 1;
-    else:
-        print("Spróbujemy inne działanie")
+    def generuj_przyklad(self):
+        if self.runda.czy_nauka():
+            self.dzialanie = przyklad.Przyklad(self.lista_a.pop(), self.lista_b.pop(), self.lista_oper.pop())
+        elif self.runda.czy_normal():
+            self.dzialanie = przyklad.Losowy_przyklad()
 
-    return wynik
+        komunikat = self.dzialanie.pytanie_wynik()
+        self.wyswietl_label_l(komunikat)
+        self.timeStart = time.perf_counter()
 
-maxOk = 200
-czasNagrody = 900;
-maxLiMnozenie   =   9
-minLiMnozenie   =   2
-maxLiADzielenie =   100
-minLiADzielenie =   2
-maxLiBDzielenie =   9
-minLiBDzielenie =   2
-a     =   0
-b     =   0
-ileOk =   0
+    def wczytaj_wynik(self):
+        wynik_var = self.builder.get_variable('entry_wynik_var')
+        wynik_uzytkownika = wynik_var.get()
+        return wynik_uzytkownika
 
-while ileOk < maxOk:
-    czysc_ekran()
-    print("Pozostało {} poprawna odpowiedzi aby otrzymac nagrode".format(maxOk-ileOk))
-    print('' *10)
-    dzialanie = losuj_dzialanie()
-    a, b = losuj_liczby(dzialanie)
-    if (dzialanie == '*'):
-        print("Podaj wynik mnozenia {}{}{}".format(a, dzialanie, b))
-    else:
-        print("Podaj wynik dzielenia {}{}{}".format(a, dzialanie, b))
-    timeStart = time.perf_counter()
-    wynik = wczytaj_wynik()
-    timeStop = time.perf_counter()
-    if (wynik == oblicz_wynik(a, b, dzialanie)):
-        ileOk += ile_pkt(timeStart, timeStop)
-        separator_print()
-    else:
-        roznica = wynik - oblicz_wynik(a, b, dzialanie)
-        if (roznica >= 3 or roznica <= -3):
-            print("Duzy blad :( - punk karny")
-            ileOk -= 1
-        if (dzialanie == '*'):
-            #nauka mnożenia
-            ileOk += nauka_mnozenia(a, b)
+    def wyswietl_label_l(self, txt):
+        self.builder.tkvariables['label_l_var'].set(txt)
+
+    def wyswietl_label_top(self, txt):
+        self.builder.tkvariables['label_top_var'].set(txt)
+
+    def generuj_nauke(self):
+        if self.runda.czy_nauka():
+            return
+
+        self.runda.set_nauka()
+
+        if self.dzialanie.czy_mnozenie():
+            self.generuj_nauke_mnozenia()
+        elif self.dzialanie.czy_dzielenie():
+            self.generuj_nauke_dzielenia()
         else:
-            #nauka dzielenia
-            ileOk +=nauka_dzielenia(a,b)
-        separator_print()
-p = run_game()
-time.sleep(czasNagrody)
-stop_game(p)
+            print('Nieprawidlowo zdefiniowane dzialanie w generuj_nauke()')
 
-#print(p)
-#p = subprocess.Popen("start chrome /new-tab www.google.com",shell = True)
-#time.sleep(10) #delay of 10 seconds
-#p.kill()
-#p.terminate()
-#print(p.pid)
+    def generuj_nauke_mnozenia(self):
+        for i in range(self.dzialanie.b, 0,  -1):
+            self.lista_a.append(self.dzialanie.a)
+            self.lista_b.append(i)
+            self.lista_oper.append(self.dzialanie.dzialanie)
+
+    def generuj_nauke_dzielenia(self):
+        self.lista_a.append(self.dzialanie.a)
+        self.lista_b.append(self.dzialanie.b)
+        self.lista_oper.append(self.dzialanie.dzielenie())
+
+        self.lista_a.append(self.dzialanie.b)
+        self.lista_b.append(int(self.dzialanie.wynik))
+        self.lista_oper.append(self.dzialanie.mnozenie())
+
+
+if __name__ == '__main__':
+    root = tk.Tk()
+    app = MyApplication(root)
+    app.run()

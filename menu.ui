@@ -1,0 +1,127 @@
+<?xml version='1.0' encoding='utf-8'?>
+<interface>
+  <object class="tk.Menu" id="mainmenu">
+    <property name="tearoff">0</property>
+    <child>
+      <object class="tk.Menuitem.Submenu" id="mopt">
+        <property name="label" translatable="yes">File</property>
+        <property name="tearoff">0</property>
+        <child>
+          <object class="tk.Menuitem.Command" id="mopt_nowa_runda">
+            <property name="command">click_on_nowa_runda</property>
+            <property name="command_id_arg">True</property>
+            <property name="label" translatable="yes">Nowa runda</property>
+          </object>
+        </child>
+        <child>
+          <object class="tk.Menuitem.Separator" id="separator1" />
+        </child>
+        <child>
+          <object class="tk.Menuitem.Command" id="mopt_wyjdz">
+            <property name="command">click_on_wyjdz</property>
+            <property name="command_id_arg">True</property>
+            <property name="label" translatable="yes">Wyjdz</property>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="tk.Menuitem.Submenu" id="mpomoc">
+        <property name="label" translatable="yes">Pomoc</property>
+        <property name="tearoff">0</property>
+        <child>
+          <object class="tk.Menuitem.Command" id="mpomoc_o_programie">
+            <property name="command">click_on_o_programie</property>
+            <property name="command_id_arg">False</property>
+            <property name="label" translatable="yes">O programie</property>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+  <object class="ttk.Frame" id="mainwindow">
+    <property name="height">200</property>
+    <property name="width">200</property>
+    <layout>
+      <property name="column">0</property>
+      <property name="propagate">True</property>
+      <property name="row">0</property>
+      <property name="sticky">nesw</property>
+    </layout>
+    <child>
+      <object class="ttk.Label" id="label_l">
+        <property name="compound">left</property>
+        <property name="cursor">center_ptr</property>
+        <property name="font">Sans 24</property>
+        <property name="padding">100</property>
+        <property name="takefocus">false</property>
+        <property name="text" translatable="yes">Menu tips and tricks.</property>
+        <property name="textvariable">string:label_l_var</property>
+        <layout>
+          <property name="column">0</property>
+          <property name="propagate">True</property>
+          <property name="row">1</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="ttk.Label" id="label_r">
+        <property name="padding">100</property>
+        <property name="text" translatable="yes">label_r</property>
+        <property name="textvariable">string:label_r_var</property>
+        <layout>
+          <property name="column">1</property>
+          <property name="propagate">True</property>
+          <property name="row">1</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="ttk.Entry" id="entry_wynik">
+        <property name="font">Sans 24</property>
+        <property name="takefocus">false</property>
+        <property name="textvariable">int:entry_wynik_var</property>
+        <layout>
+          <property name="column">1</property>
+          <property name="propagate">True</property>
+          <property name="row">1</property>
+          <property name="sticky">w</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="ttk.Button" id="button_sprawdz">
+        <property name="command">click_on_sprawdz</property>
+        <property name="takefocus">true</property>
+        <property name="text" translatable="yes">Sprawdz</property>
+        <layout>
+          <property name="column">0</property>
+          <property name="propagate">True</property>
+          <property name="row">2</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="ttk.Label" id="label_top">
+        <property name="font">Sans 24</property>
+        <property name="textvariable">string:label_top_var</property>
+        <layout>
+          <property name="column">0</property>
+          <property name="propagate">True</property>
+          <property name="row">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="ttk.Button" id="button_nagroda">
+        <property name="command">click_on_nagroda</property>
+        <property name="text" translatable="yes">Nagroda</property>
+        <layout>
+          <property name="column">1</property>
+          <property name="propagate">True</property>
+          <property name="row">2</property>
+        </layout>
+      </object>
+    </child>
+  </object>
+</interface>
