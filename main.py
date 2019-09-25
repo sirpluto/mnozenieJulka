@@ -76,6 +76,7 @@ class MyApplication(pygubu.TkApplication):
     def click_on_sprawdz(self):
         timeStop = time.perf_counter()
         wynik_uzytkownika = self.wczytaj_wynik()
+        self.wyczysc_wynik()
         self.runda.aktualizuj(wynik_uzytkownika, self.dzialanie.wynik, timeStop - self.timeStart)
         self.wyswietl_label_top(self.runda.komunikat())
 
@@ -104,6 +105,9 @@ class MyApplication(pygubu.TkApplication):
         wynik_var = self.builder.get_variable('entry_wynik_var')
         wynik_uzytkownika = wynik_var.get()
         return wynik_uzytkownika
+
+    def wyczysc_wynik(self):
+        self.builder.tkvariables['entry_wynik_var'].set('')
 
     def wyswietl_label_l(self, txt):
         self.builder.tkvariables['label_l_var'].set(txt)

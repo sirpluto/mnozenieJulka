@@ -77,9 +77,9 @@ class Losowy_przyklad(Przyklad):
 
     def ustaw_limity(self):
         if self.czy_mnozenie():
-            self.maxLiA   =   9
+            self.maxLiA   =   14
             self.minLiA   =   2
-            self.maxLiB   =   9
+            self.maxLiB   =   14
             self.minLiB   =   2
         elif self.czy_dzielenie():
             self.maxLiA =   100
