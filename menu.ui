@@ -82,6 +82,7 @@ Menu-&gt;Plik-&gt;Nowa gra</property>
         <property name="font">Sans 24</property>
         <property name="takefocus">false</property>
         <property name="textvariable">int:entry_wynik_var</property>
+        <bind add="" handler="on_entry_wynik_keypress_enter" sequence="&lt;KeyPress-Return&gt;" />
         <layout>
           <property name="column">1</property>
           <property name="propagate">True</property>

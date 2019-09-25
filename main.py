@@ -38,6 +38,9 @@ class MyApplication(pygubu.TkApplication):
         self.lista_b = []
         self.lissta_oper = []
 
+    def on_entry_wynik_keypress_enter(self, event=None):
+        self.click_on_sprawdz()
+
     def click_on_wyjdz(self, itemid):
         if itemid == 'mopt_wyjdz':
             messagebox.showinfo('Wyjdz', 'Do zobaczenia.')
