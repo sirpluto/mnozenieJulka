@@ -69,23 +69,23 @@ class Losowy_przyklad(Przyklad):
     minLiB =   0
     ilosc_zdobytych_pkt = 0
 
-    def __init__(self):
+    def __init__(self, config):
         self.losuj_dzialanie()
-        self.ustaw_limity()
+        self.ustaw_limity(config)
         self.losuj_liczby()
         self.oblicz_wynik()
 
-    def ustaw_limity(self):
+    def ustaw_limity(self, config):
         if self.czy_mnozenie():
-            self.maxLiA   =   14
-            self.minLiA   =   2
-            self.maxLiB   =   14
-            self.minLiB   =   2
+            self.maxLiA = config.get_max_mnozenie_li_a()
+            self.minLiA = config.get_min_mnozenie_li_a()
+            self.maxLiB = config.get_max_mnozenie_li_b()
+            self.minLiB = config.get_min_mnozenie_li_b()
         elif self.czy_dzielenie():
-            self.maxLiA =   100
-            self.minLiA =   2
-            self.maxLiB =   9
-            self.minLiB =   2
+            self.maxLiA = config.get_max_dzielenie_li_a()
+            self.minLiA = config.get_min_dzielenie_li_a()
+            self.maxLiB = config.get_max_dzielenie_li_b()
+            self.minLiB = config.get_min_dzielenie_li_b()
 
 
 

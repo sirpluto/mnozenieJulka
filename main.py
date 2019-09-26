@@ -11,6 +11,7 @@ import przyklad
 import time
 import play_sound
 import utils
+import config
 
 class MyApplication(pygubu.TkApplication):
 
@@ -38,6 +39,8 @@ class MyApplication(pygubu.TkApplication):
         self.lista_b = []
         self.lissta_oper = []
 
+        self.config = config.Config()
+
     def on_entry_wynik_keypress_enter(self, event=None):
         self.click_on_sprawdz()
 
@@ -49,18 +52,16 @@ class MyApplication(pygubu.TkApplication):
     def click_on_nowa_runda(self, itemid):
         if itemid == 'mopt_nowa_runda':
             messagebox.showinfo('Nowa runda', 'Czas rozpoczac nowa runde')
-            ile_pkt_nagroda = 200
-            ile_pkt_szybka_odpowiedz = 5
-            czas_szybka_odpowiedz = 10
-            roznica_duzy_blad = 3
-            ile_pkt_duzy_blad = 4
 
             self.lista_a = []
             self.lista_b = []
             self.lista_oper = []
 
-            self.runda = runda.Runda(ile_pkt_nagroda, ile_pkt_szybka_odpowiedz,
-                                     czas_szybka_odpowiedz, roznica_duzy_blad, ile_pkt_duzy_blad)
+            self.runda = runda.Runda(self.config.get_ile_pkt_nagroda(),
+                                     self.config.get_ile_pkt_szybka_odpowiedz(),
+                                     self.config.get_czas_szybka_odpowiedz(),
+                                     self.config.get_roznica_duzy_blad(),
+                                     self.config.get_ile_pkt_duzy_blad())
             self.wyswietl_label_top(self.runda.komunikat())
             self.generuj_przyklad()
 
@@ -98,7 +99,7 @@ class MyApplication(pygubu.TkApplication):
         if self.runda.czy_nauka():
             self.dzialanie = przyklad.Przyklad(self.lista_a.pop(), self.lista_b.pop(), self.lista_oper.pop())
         elif self.runda.czy_normal():
-            self.dzialanie = przyklad.Losowy_przyklad()
+            self.dzialanie = przyklad.Losowy_przyklad(self.config)
 
         komunikat = self.dzialanie.pytanie_wynik()
         self.wyswietl_label_l(komunikat)
