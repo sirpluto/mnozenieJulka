@@ -12,6 +12,7 @@ import time
 import play_sound
 import utils
 import config
+import matrix
 
 class MyApplication(pygubu.TkApplication):
 
@@ -40,6 +41,7 @@ class MyApplication(pygubu.TkApplication):
         self.lissta_oper = []
 
         self.config = config.Config()
+        self.statistic = matrix.Statisctic(self.config)
 
     def on_entry_wynik_keypress_enter(self, event=None):
         self.click_on_sprawdz()
@@ -47,10 +49,12 @@ class MyApplication(pygubu.TkApplication):
     def click_on_wyjdz(self, itemid):
         if itemid == 'mopt_wyjdz':
             messagebox.showinfo('Wyjdz', 'Do zobaczenia.')
+            self.statistic.save()
             self.quit()
 
     def click_on_nowa_runda(self, itemid):
         if itemid == 'mopt_nowa_runda':
+            self.statistic.save()
             messagebox.showinfo('Nowa runda', 'Czas rozpoczac nowa runde')
 
             self.lista_a = []
@@ -80,15 +84,20 @@ class MyApplication(pygubu.TkApplication):
     def click_on_sprawdz(self):
         timeStop = time.perf_counter()
         wynik_uzytkownika = self.wczytaj_wynik()
+        czy_wynik_ok = wynik_uzytkownika == self.dzialanie.wynik
         self.wyczysc_wynik()
         self.runda.aktualizuj(wynik_uzytkownika, self.dzialanie.wynik, timeStop - self.timeStart)
         self.wyswietl_label_top(self.runda.komunikat())
 
+        if self.runda.czy_normal():
+            self.statistic.update_all_matrix(self.dzialanie, czy_wynik_ok)
+
         if not self.lista_a:
             self.runda.set_normal()
 
-        if wynik_uzytkownika == self.dzialanie.wynik:
-            play_sound.play_random_happy()
+        if czy_wynik_ok:
+            if self.runda.czy_normal():
+                play_sound.play_random_happy()
             self.generuj_przyklad()
         else:
             play_sound.play_random_sad()
@@ -99,7 +108,11 @@ class MyApplication(pygubu.TkApplication):
         if self.runda.czy_nauka():
             self.dzialanie = przyklad.Przyklad(self.lista_a.pop(), self.lista_b.pop(), self.lista_oper.pop())
         elif self.runda.czy_normal():
-            self.dzialanie = przyklad.Losowy_przyklad(self.config)
+            a, b = self.statistic.generuj_skladniki_dzialania(self.config)
+            if a == -1:
+                self.dzialanie = przyklad.Losowy_przyklad(self.config, self.statistic)
+            else:
+                self.dzialanie = przyklad.Przyklad(a, b, przyklad.Przyklad.mnozenie())
 
         komunikat = self.dzialanie.pytanie_wynik()
         self.wyswietl_label_l(komunikat)

@@ -69,7 +69,7 @@ class Losowy_przyklad(Przyklad):
     minLiB =   0
     ilosc_zdobytych_pkt = 0
 
-    def __init__(self, config):
+    def __init__(self, config, matrix_errors):
         self.losuj_dzialanie()
         self.ustaw_limity(config)
         self.losuj_liczby()

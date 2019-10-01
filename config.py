@@ -20,7 +20,8 @@ class Config():
         'ile_pkt_szybka_odpowiedz': 5,
         'czas_szybka_odpowiedz': 10,
         'roznica_duzy_blad': 3,
-        'ile_pkt_duzy_blad': 4
+        'ile_pkt_duzy_blad': 4,
+        'ilosc_bledow_przyklad': 3
     }
 
     def __init__(self):
@@ -43,11 +44,12 @@ class Config():
             json.dump(self.config_data, json_file)
 
     def add_default_element(self, element, value):
-        self.config_data.append({element: value})
+        self.config_data[element] = value
 
     def get_element(self, element):
-        value = self.config_data[element]
-        if not value:
+        try:
+            value = self.config_data[element]
+        except KeyError:
             value = self.default_config[element]
             self.add_default_element(element, value)
         return value
@@ -90,5 +92,8 @@ class Config():
 
     def get_min_dzielenie_li_b(self):
         return self.get_element('min_dzielenie_li_b')
+
+    def get_ilosc_bledow_przyklad(self):
+        return self.get_element('ilosc_bledow_przyklad')
 
 
