@@ -17,13 +17,10 @@ class Runda():
         self.ile_pkt_duzy_blad = ile_pkt_duzy_blad
         self.stan = 'normal'
 
-    def aktualizuj(self, wynik_uzytkownika, wynik, czas):
+    def aktualizuj_punkty(self, wynik_uzytkownika, wynik, czas):
         czy_duzy_blad = abs(wynik_uzytkownika - wynik) > self.roznica_duzy_blad
         czy_szybka_odpowiedz = czas < self.czas_szybka_odpowiedz
         czy_wynik_ok = 0 == wynik - wynik_uzytkownika
-
-        if self.stan == 'nauka':
-            return
 
         if not czy_wynik_ok:
             if czy_duzy_blad:
@@ -35,6 +32,20 @@ class Runda():
                 self.akt_pkt += self.ile_pkt_szybka_odpowiedz
             else:
                 self.akt_pkt += 1
+
+    def aktualizuj(self, wynik_uzytkownika, wynik, ilosc_przykladow, czas):
+        czy_wynik_ok = 0 == wynik - wynik_uzytkownika
+
+        if self.stan != 'nauka':
+            self.aktualizuj_punkty(wynik_uzytkownika, wynik, czas)
+
+        if ilosc_przykladow > 0:
+            return
+
+        if czy_wynik_ok:
+            self.stan = 'normal'
+        else:
+            self.stan = 'nauka'
 
         if self.akt_pkt > self.ile_pkt_nagroda:
             self.set_nagroda()
