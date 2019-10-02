@@ -37,7 +37,7 @@ class Runda():
                 self.akt_pkt += 1
 
         if self.akt_pkt > self.ile_pkt_nagroda:
-            self.stan = 'nagroda'
+            self.set_nagroda()
 
     def komunikat(self):
         return 'Do nagrody pozostalo: {} z {}'.format(self.ile_pkt_nagroda - self.akt_pkt, self.ile_pkt_nagroda)
@@ -56,6 +56,9 @@ class Runda():
 
     def set_nauka(self):
         self.stan = 'nauka'
+
+    def set_nagroda(self):
+        self.stan = 'nagroda'
 
 
 

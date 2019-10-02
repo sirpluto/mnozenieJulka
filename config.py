@@ -21,7 +21,8 @@ class Config():
         'czas_szybka_odpowiedz': 10,
         'roznica_duzy_blad': 3,
         'ile_pkt_duzy_blad': 4,
-        'ilosc_bledow_przyklad': 3
+        'ilosc_bledow_przyklad': 3,
+        'czas_nagrody': 900
     }
 
     def __init__(self):
@@ -96,4 +97,6 @@ class Config():
     def get_ilosc_bledow_przyklad(self):
         return self.get_element('ilosc_bledow_przyklad')
 
+    def get_czas_nagrody(self):
+        return self.get_element('czas_nagrody')
 

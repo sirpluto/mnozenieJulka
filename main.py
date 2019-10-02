@@ -75,7 +75,7 @@ class MyApplication(pygubu.TkApplication):
     def click_on_nagroda(self):
         if not self.runda.czy_nagroda():
             return
-        czasNagrody = 9;
+        czasNagrody = self.config.get_czas_nagrody();
         p = utils.run_game()
         time.sleep(czasNagrody)
         utils.stop_game(p)
