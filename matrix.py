@@ -21,10 +21,19 @@ class Statisctic():
         self.load_errors(config)
         self.load_total(config)
 
+    def create_base_one_row(self, config):
+        element = 0
+        one_row = []
+        while element <= config.get_max_mnozenie_li_a():
+            one_row.append(0)
+            element += 1
+        return one_row
+
     def create_base_matrix(self, config):
         raw = 0
+        one_row = self.create_base_one_row(config)
         while raw <= config.get_max_mnozenie_li_b():
-            self.base_matrix.append(self.matrix_one_row)
+            self.base_matrix.append(one_row)
             raw += 1
 
     def load(self, config, file_name):
