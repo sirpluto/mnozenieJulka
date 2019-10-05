@@ -7,6 +7,7 @@ import play_sound
 import utils
 import emoticon
 
+
 class Logic:
 
     def __init__(self):

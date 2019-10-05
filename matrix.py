@@ -3,7 +3,7 @@ import przyklad
 import numpy
 
 
-class Statisctic():
+class Statisctic:
 
     matrix_errors_name = 'errors.json'
 

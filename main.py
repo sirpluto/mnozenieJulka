@@ -1,4 +1,3 @@
-import os
 try:
     import tkinter as tk
     from tkinter import messagebox
@@ -8,8 +7,6 @@ except:
 
 import pygubu
 import logic
-
-
 
 
 class MyApplication(pygubu.TkApplication):
