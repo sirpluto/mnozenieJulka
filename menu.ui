@@ -40,8 +40,8 @@
     </child>
   </object>
   <object class="ttk.Frame" id="mainwindow">
-    <property name="height">200</property>
-    <property name="width">200</property>
+    <property name="height">1080</property>
+    <property name="width">1920</property>
     <layout>
       <property name="column">0</property>
       <property name="propagate">True</property>
@@ -122,6 +122,17 @@ Menu-&gt;Plik-&gt;Nowa gra</property>
           <property name="column">1</property>
           <property name="propagate">True</property>
           <property name="row">2</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="tk.Canvas" id="canvas_image">
+        <property name="height">220</property>
+        <property name="width">220</property>
+        <layout>
+          <property name="column">1</property>
+          <property name="propagate">True</property>
+          <property name="row">0</property>
         </layout>
       </object>
     </child>

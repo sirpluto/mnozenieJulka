@@ -1,3 +1,4 @@
+import os
 try:
     import tkinter as tk
     from tkinter import messagebox
@@ -7,6 +8,8 @@ except:
 
 import pygubu
 import logic
+
+
 
 
 class MyApplication(pygubu.TkApplication):
@@ -24,6 +27,8 @@ class MyApplication(pygubu.TkApplication):
         # Set main menu
         self.mainmenu = menu = builder.get_object('mainmenu', self.master)
         self.set_menu(menu)
+
+        self.canvas = self.builder.get_object('canvas_image')
 
         # Configure callbacks
         builder.connect_callbacks(self)
@@ -60,6 +65,7 @@ class MyApplication(pygubu.TkApplication):
     def click_on_sprawdz(self):
         self.logic.set_stop_time()
         self.wczytaj_wynik()
+        self.wyswietl_canvas_image(self.logic.emoticon_file())
         self.logic.play_sound()
         self.logic.aktualizuj()
         self.logic.dodaj_przyklady_do_listy()
@@ -83,6 +89,11 @@ class MyApplication(pygubu.TkApplication):
     def wyswietl_label_top(self, txt):
         self.builder.tkvariables['label_top_var'].set(txt)
 
+    def wyswietl_canvas_image(self, file_name):
+        self._image = img = tk.PhotoImage(file=file_name)
+        # draw in canvas
+        c = self.canvas
+        c.create_image(15, 15, anchor='nw', image=img)
 
 if __name__ == '__main__':
     root = tk.Tk()

@@ -5,6 +5,7 @@ import przyklad
 import time
 import play_sound
 import utils
+import emoticon
 
 class Logic:
 
@@ -118,6 +119,11 @@ class Logic:
                 play_sound.play_random_happy()
         else:
             play_sound.play_random_sad()
+
+    def emoticon_file(self):
+        emot = emoticon.Emoticon(self.czy_wynik_ok())
+        return emot.file_name()
+
 
     def aktulizuj_runde(self):
         self.runda.aktualizuj(self.wynik_uzytkownika, self.akt_dzialanie.wynik, len(self.lista_przykladow), self.time_stop - self.time_start)
