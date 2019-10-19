@@ -37,7 +37,7 @@ class Logic:
         lista_przykladow = []
 
         lista_przykladow.append(przyklad.Przyklad(a, b, przyklad.Przyklad.dzielenie()))
-        lista_przykladow.append(przyklad.Przyklad(b, wynik, przyklad.Przyklad.mnozenie()))
+        lista_przykladow.append(przyklad.Przyklad(b, int(wynik), przyklad.Przyklad.mnozenie()))
 
         return lista_przykladow
 
@@ -46,8 +46,6 @@ class Logic:
         lista_przykladow = []
         lista_przykladow.append(przyklad.Przyklad(a, b, dzialanie))
         return lista_przykladow
-
-
 
     @staticmethod
     def generuj_nauke(dzialanie):
