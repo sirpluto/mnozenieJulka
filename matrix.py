@@ -111,14 +111,3 @@ class Statisctic:
             return index_a, index_b
         else:
             return -1, -1
-
-
-
-
-
-
-
-
-
-
-

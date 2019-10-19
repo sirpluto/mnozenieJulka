@@ -112,7 +112,6 @@ class Przyklad():
         return pytanie
 
 
-
 class Losowy_przyklad(Przyklad):
 
     maxLiA =   0
@@ -173,58 +172,3 @@ class Losowy_przyklad(Przyklad):
             while (self.a % self.b != 0) or (self.a / self.b > 10):
                 self.a = random.randint(self.minLiA, self.maxLiA)
                 self.b = random.randint(self.minLiB, self.maxLiB)
-'''
-    def nauka_mnozenia(self):
-        czy_wynik_ok = False
-
-        utils.wyswietl(self.builder, "Sprobujmy cos latwiejszego :)")
-        for i in range(1, self.b+1):
-            przyklad = Przyklad(self.builder, self.a, i, self.mnozenie())
-            przyklad.pytanie_wynik()
-            wynik = utils.wczytaj_wynik()
-            if wynik == przyklad.wynik:
-                utils.wyswietl(self.builder, "Brawo")
-            else:
-                utils.wyswietl(self.builder, ":(")
-                utils.wyswietl(self.builder, "Prawidlowa odpowiedz to: {}".format(przyklad.wynik))
-        utils.wyswietl(self.builder, "Teraz znasz juz odpowiedz na {}{}{}".format(self.a, self.dzialanie, self.b))
-        wynik = utils.wczytaj_wynik()
-        if wynik == self.wynik:
-            utils.wyswietl(self.builder, "Brawo")
-            czy_wynik_ok = True
-        else:
-            utils.wyswietl(self.builder, "Sprobjemy inne dzialanie")
-        return czy_wynik_ok
-
-    def nauka_dzielenia(self):
-        czy_wynik_ok = False
-
-        przyklad = Przyklad(self.builder, self.b, int(self.wynik), self.mnozenie())
-        przyklad.pytanie_wynik()
-        wynik = utils.wczytaj_wynik()
-        if wynik == przyklad.wynik:
-            utils.wyswietl(self.builder, "Brawo :)")
-        else:
-            utils.wyswietl(self.builder, ":(")
-            utils.wyswietl(self.builder, "Prawidlowa odpowiedz to: []".format(przyklad.wynik))
-        utils.wyswietl(self.builder, "Teraz znasz juz odpowiedz na {}{}{}".format(self.a, self.dzialanie, self.b))
-        wynik = utils.wczytaj_wynik()
-        if wynik == self.wynik:
-            utils.wyswietl(self.builder, "Brawo")
-            czy_wynik_ok = True
-        else:
-            utils.wyswietl(self.builder, "Sprobujemy inne dzialanie")
-
-        return czy_wynik_ok
-
-    def nauka(self):
-        czy_wynik_ok = False
-
-        if self.czy_mnozenie():
-            czy_wynik_ok = self.nauka_mnozenia()
-        elif self.czy_dzielenie():
-            czy_wynik_ok = self.nauka_dzielenia()
-        else:
-            utils.wyswietl(self.builder, "Niezdefiniowane dzialanie w nauka()")
-        return czy_wynik_ok
-'''

@@ -177,4 +177,3 @@ class Logic:
         time.sleep(czasNagrody)
         utils.stop_game(p)
         self.runda.set_normal()
-

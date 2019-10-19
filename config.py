@@ -133,4 +133,3 @@ class Config():
 
     def get_czas_nagrody(self):
         return self.get_element('czas_nagrody')
-

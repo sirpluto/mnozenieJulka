@@ -33,7 +33,6 @@ class MyApplication(pygubu.TkApplication):
 
         self.logic = logic.Logic()
 
-
     def on_entry_wynik_keypress_enter(self, event=None):
         self.click_on_sprawdz()
 

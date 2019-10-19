@@ -1,4 +1,3 @@
-
 class Runda():
 
     ile_pkt_nagroda = 0
@@ -70,10 +69,3 @@ class Runda():
 
     def set_nagroda(self):
         self.stan = 'nagroda'
-
-
-
-
-
-
-
