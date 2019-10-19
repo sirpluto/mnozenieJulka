@@ -5,34 +5,36 @@ import numpy
 
 class Statisctic:
 
-    matrix_errors_name = 'errors.json'
+    errors_str = 'errors'
+    total_str = 'total'
+    json_extend_str = '.json'
+    dim = 100
 
     matrix_errors = None
-
-    matrix_total_name = 'total.json'
 
     matrix_total = None
 
     base_matrix = []
 
-    matrix_one_row = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-
-    def __init__(self, config):
+    def __init__(self, config, dzialanie):
+        self. matrix_errors_name = "{}_{}{}".format(self.errors_str, dzialanie, self.json_extend_str)
+        self. matrix_total_name = "{}_{}{}".format(self.total_str, dzialanie, self.json_extend_str)
         self.load_errors(config)
         self.load_total(config)
 
-    def create_base_one_row(self, config):
+    def create_base_one_row(self):
         element = 0
         one_row = []
-        while element <= config.get_max_mnozenie_li_a():
+        while element <= self.dim:
             one_row.append(0)
             element += 1
         return one_row
 
     def create_base_matrix(self, config):
         raw = 0
-        one_row = self.create_base_one_row(config)
-        while raw <= config.get_max_mnozenie_li_b():
+        self.base_matrix = []
+        one_row = self.create_base_one_row()
+        while raw <= self.dim:
             self.base_matrix.append(one_row)
             raw += 1
 
@@ -70,7 +72,7 @@ class Statisctic:
             json.dump(self.matrix_errors, json_file)
 
     def update_matrix_data(self, matrix_data, dzialanie):
-        if dzialanie.czy_mnozenie():
+        if dzialanie.czy_mnozenie() or dzialanie.czy_dodawanie or dzialanie.czy_odejmowanie:
             index_a = dzialanie.a
             index_b = dzialanie.b
         elif dzialanie.czy_dzielenie:
@@ -79,7 +81,8 @@ class Statisctic:
             iloraz = int(dzielna / dzielnik)
             index_a = dzielnik
             index_b = iloraz
-        self.correct_data_integrity(index_a, index_b)
+        if not dzialanie.czy_odejmowanie:
+            self.correct_data_integrity(index_a, index_b)
         matrix_data[index_a][index_b] += 1
         matrix_data[index_b][index_a] += 1
 

@@ -16,6 +16,16 @@ class Config():
         'max_dzielenie_li_b': 9,
         'min_dzielenie_li_b': 2,
 
+        'max_dodawanie_li_a': 14,
+        'min_dodawanie_li_a': 1,
+        'max_dodawanie_li_b': 14,
+        'min_dodawanie_li_b': 1,
+
+        'max_odejmowanie_li_a': 14,
+        'min_odejmowanie_li_a': 1,
+        'max_odejmowanie_li_b': 14,
+        'min_odejmowanie_li_b': 1,
+
         'ile_pkt_nagroda': 200,
         'ile_pkt_szybka_odpowiedz': 5,
         'czas_szybka_odpowiedz': 10,
@@ -93,6 +103,30 @@ class Config():
 
     def get_min_dzielenie_li_b(self):
         return self.get_element('min_dzielenie_li_b')
+
+    def get_max_dodawanie_li_a(self):
+        return self.get_element('max_dodawanie_li_a')
+
+    def get_min_dodawanie_li_a(self):
+        return self.get_element('min_dodawanie_li_a')
+
+    def get_max_dodawanie_li_b(self):
+        return self.get_element('max_dodawanie_li_b')
+
+    def get_min_dodawanie_li_b(self):
+        return self.get_element('min_dodawanie_li_b')
+
+    def get_max_odejmowanie_li_a(self):
+        return self.get_element('max_odejmowanie_li_a')
+
+    def get_min_odejmowanie_li_a(self):
+        return self.get_element('min_odejmowanie_li_a')
+
+    def get_max_odejmowanie_li_b(self):
+        return self.get_element('max_odejmowanie_li_b')
+
+    def get_min_odejmowanie_li_b(self):
+        return self.get_element('min_odejmowanie_li_b')
 
     def get_ilosc_bledow_przyklad(self):
         return self.get_element('ilosc_bledow_przyklad')

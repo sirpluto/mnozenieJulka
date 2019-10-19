@@ -7,6 +7,7 @@ except:
 
 import pygubu
 import logic
+import przyklad
 
 
 class MyApplication(pygubu.TkApplication):
@@ -44,7 +45,9 @@ class MyApplication(pygubu.TkApplication):
 
     def click_on_nowa_runda(self, itemid):
         if itemid == 'mopt_nowa_runda':
-            self.logic.nowa_runda()
+            lista_dzialan = [przyklad.Przyklad.mnozenie(), przyklad.Przyklad.dzielenie(),
+                             przyklad.Przyklad.dodawanie(), przyklad.Przyklad.odejmowanie()]
+            self.logic.nowa_runda(lista_dzialan)
             messagebox.showinfo('Nowa runda', 'Czas rozpoczac nowa runde')
             self.logic.dodaj_przyklady_do_listy()
             self.logic.wczytaj_przyklad_z_listy()

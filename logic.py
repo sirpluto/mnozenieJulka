@@ -14,13 +14,14 @@ class Logic:
         self.config = config.Config()
 
         self.lista_przykladow = []
+        self.lista_dzialan = []
 
         self.akt_dzialanie = None
         self.wynik_uzytkownika = None
 
         self.runda = None
 
-        self.statistic = matrix.Statisctic(self.config)
+        self.statistic = []
 
     @staticmethod
     def generuj_nauke_mnozenia(a, b):
@@ -41,6 +42,14 @@ class Logic:
         return lista_przykladow
 
     @staticmethod
+    def powtorz_przyklad(a, b, dzialanie):
+        lista_przykladow = []
+        lista_przykladow.append(przyklad.Przyklad(a, b, dzialanie))
+        return lista_przykladow
+
+
+
+    @staticmethod
     def generuj_nauke(dzialanie):
         lista_przykladow = []
 
@@ -48,17 +57,28 @@ class Logic:
             lista_przykladow = Logic.generuj_nauke_mnozenia(dzialanie.a, dzialanie.b)
         elif dzialanie.czy_dzielenie():
             lista_przykladow = Logic.generuj_nauke_dzielenia(dzialanie.a, dzialanie.b, dzialanie.wynik)
+        elif dzialanie.czy_dodawanie() or dzialanie.czy_odejmowanie():
+            lista_przykladow = Logic.powtorz_przyklad(dzialanie.a, dzialanie.b, dzialanie.dzialanie)
         else:
             print('Nieprawidlowo zdefiniowane dzialanie w generuj_nauke()')
 
         return lista_przykladow
 
+    def generuj_przyklad_statystyka(self):
+        a = -1
+        b = -1
+        for statystyka in self.statistic:
+            a, b = statystyka.generuj_skladniki_dzialania(self.config)
+            if not a == -1:
+                break
+        return a, b
+
     def generuj_przyklad(self):
         lista = []
 
-        a, b = self.statistic.generuj_skladniki_dzialania(self.config)
+        a, b = self.generuj_przyklad_statystyka()
         if a == -1:
-            lista.append(przyklad.Losowy_przyklad(self.config, self.statistic))
+            lista.append(przyklad.Losowy_przyklad(self.config, self.lista_dzialan))
         else:
             lista.append(przyklad.Przyklad(a, b, przyklad.Przyklad.mnozenie()))
         return lista
@@ -92,12 +112,25 @@ class Logic:
     def komunikat(self):
         return self.runda.komunikat()
 
-    def nowa_runda(self):
-        self.statistic.save()
+    def wczytaj_statystyki(self):
+        for dzialanie in self.lista_dzialan:
+            self.statistic.append(matrix.Statisctic(self.config, przyklad.Przyklad.dzialanie_string(dzialanie)))
+
+    def zapisz_statystyki(self):
+        for statystyka in self.statistic:
+            statystyka.save()
+        self.statistic.clear()
+
+    def nowa_runda(self, lista_dzialan):
+        if len(self.statistic) > 0:
+            self.zapisz_statystyki()
 
         self.lista_przykladow = []
+        self.lista_dzialan = lista_dzialan
         self.akt_dzialanie = None
         self.wynik_uzytkownika = None
+
+        self.wczytaj_statystyki()
 
         self.runda = runda.Runda(self.config.get_ile_pkt_nagroda(),
                                  self.config.get_ile_pkt_szybka_odpowiedz(),
@@ -106,7 +139,7 @@ class Logic:
                                  self.config.get_ile_pkt_duzy_blad())
 
     def wyjdz(self):
-        self.statistic.save()
+        self.zapisz_statystyki()
 
     def set_start_time(self):
         self.time_start = time.perf_counter()
@@ -125,13 +158,14 @@ class Logic:
         emot = emoticon.Emoticon(self.czy_wynik_ok())
         return emot.file_name()
 
-
     def aktulizuj_runde(self):
         self.runda.aktualizuj(self.wynik_uzytkownika, self.akt_dzialanie.wynik, len(self.lista_przykladow), self.time_stop - self.time_start)
 
     def aktualizuj_matryce_bledow(self):
         if self.runda.czy_normal():
-            self.statistic.update_all_matrix(self.akt_dzialanie, self.czy_wynik_ok())
+            for index in range(len(self.statistic)):
+                if self.akt_dzialanie == self.lista_dzialan[index]:
+                    self.statistic[index].update_all_matrix(self.akt_dzialanie, self.czy_wynik_ok())
 
     def aktualizuj(self):
         self.aktualizuj_matryce_bledow()
