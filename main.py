@@ -85,22 +85,27 @@ class MyApplication(pygubu.TkApplication):
         self.logic.nagroda()
 
     def click_on_sprawdz(self):
-        self.logic.set_stop_time()
-        self.wczytaj_wynik()
-        self.wyswietl_canvas_image(self.logic.emoticon_file())
-        self.logic.play_sound()
-        self.logic.aktualizuj()
-        self.logic.dodaj_przyklady_do_listy()
-        self.logic.wczytaj_przyklad_z_listy()
-        self.wyczysc_wynik()
-        self.wyswietl_label_top(self.logic.komunikat())
-        self.wyswietl_label_l(self.logic.pytanie_dzialanie())
-        self.logic.set_start_time()
+
+        if self.wczytaj_wynik():
+            self.logic.set_stop_time()
+            self.wyswietl_canvas_image(self.logic.emoticon_file())
+            self.logic.play_sound()
+            self.logic.aktualizuj()
+            self.logic.dodaj_przyklady_do_listy()
+            self.logic.wczytaj_przyklad_z_listy()
+            self.wyczysc_wynik()
+            self.wyswietl_label_top(self.logic.komunikat())
+            self.wyswietl_label_l(self.logic.pytanie_dzialanie())
+            self.logic.set_start_time()
 
     def wczytaj_wynik(self):
         wynik_var = self.builder.get_variable('entry_wynik_var')
-        wynik_uzytkownika = wynik_var.get()
+        try:
+            wynik_uzytkownika = wynik_var.get()
+        except:
+            wynik_uzytkownika = None
         self.logic.set_wynik_uzytownika(wynik_uzytkownika)
+        return wynik_uzytkownika
 
     def wyczysc_wynik(self):
         self.builder.tkvariables['entry_wynik_var'].set('')
