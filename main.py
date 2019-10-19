@@ -43,18 +43,41 @@ class MyApplication(pygubu.TkApplication):
             self.logic.wyjdz()
             self.quit()
 
-    def click_on_nowa_runda(self, itemid):
-        if itemid == 'mopt_nowa_runda':
+    def nowa_runda(self, lista_dzialan):
+        self.logic.nowa_runda(lista_dzialan)
+        messagebox.showinfo('Nowa runda', 'Czas rozpoczac nowa runde')
+        self.logic.dodaj_przyklady_do_listy()
+        self.logic.wczytaj_przyklad_z_listy()
+        self.wyczysc_wynik()
+        self.wyswietl_label_top(self.logic.komunikat())
+        self.wyswietl_label_l(self.logic.pytanie_dzialanie())
+        self.logic.set_start_time()
+
+    def click_on_runda_mix(self, itemid):
+        if itemid == 'mopt_runda_mix':
             lista_dzialan = [przyklad.Przyklad.mnozenie(), przyklad.Przyklad.dzielenie(),
                              przyklad.Przyklad.dodawanie(), przyklad.Przyklad.odejmowanie()]
-            self.logic.nowa_runda(lista_dzialan)
-            messagebox.showinfo('Nowa runda', 'Czas rozpoczac nowa runde')
-            self.logic.dodaj_przyklady_do_listy()
-            self.logic.wczytaj_przyklad_z_listy()
-            self.wyczysc_wynik()
-            self.wyswietl_label_top(self.logic.komunikat())
-            self.wyswietl_label_l(self.logic.pytanie_dzialanie())
-            self.logic.set_start_time()
+            self.nowa_runda(lista_dzialan)
+
+    def click_on_runda_mnozenie(self, itemid):
+        if itemid == 'mopt_runda_mnozenie':
+            lista_dzialan = [przyklad.Przyklad.mnozenie()]
+            self.nowa_runda(lista_dzialan)
+
+    def click_on_runda_dzielenie(self, itemid):
+        if itemid == 'mopt_runda_dzielenie':
+            lista_dzialan = [przyklad.Przyklad.dzielenie()]
+            self.nowa_runda(lista_dzialan)
+
+    def click_on_runda_dodawanie(self, itemid):
+        if itemid == 'mopt_runda_dodawanie':
+            lista_dzialan = [przyklad.Przyklad.dodawanie()]
+            self.nowa_runda(lista_dzialan)
+
+    def click_on_runda_odejmowanie(self, itemid):
+        if itemid == 'mopt_runda_odejmowanie':
+            lista_dzialan = [przyklad.Przyklad.odejmowanie()]
+            self.nowa_runda(lista_dzialan)
 
     def click_on_o_programie(self):
         messagebox.showinfo('O programie', 'To jest prgram dla Julki')
