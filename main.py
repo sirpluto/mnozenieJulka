@@ -86,7 +86,7 @@ class MyApplication(pygubu.TkApplication):
 
     def click_on_sprawdz(self):
 
-        if self.wczytaj_wynik():
+        if not self.wczytaj_wynik() == None:
             self.logic.set_stop_time()
             self.wyswietl_canvas_image(self.logic.emoticon_file())
             self.logic.play_sound()
