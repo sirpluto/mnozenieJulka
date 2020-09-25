@@ -170,11 +170,11 @@ class Logic:
         self.aktualizuj_matryce_bledow()
         self.aktulizuj_runde()
 
-    def nagroda(self):
+    def nagroda(self, login):
         if not self.runda.czy_nagroda():
             return
         czasNagrody = self.config.get_czas_nagrody();
-        p = utils.run_game()
+        p = utils.run_game(login)
         time.sleep(czasNagrody)
         utils.stop_game(p)
         self.runda.set_normal()

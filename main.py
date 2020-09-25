@@ -101,7 +101,7 @@ class MyApplication(pygubu.TkApplication):
 
     def click_on_nagroda(self):
         if not self.logic == None:
-            self.logic.nagroda()
+            self.logic.nagroda(self.login)
 
     def click_on_sprawdz(self):
 
