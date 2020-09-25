@@ -10,8 +10,8 @@ import emoticon
 
 class Logic:
 
-    def __init__(self):
-        self.config = config.Config()
+    def __init__(self, login):
+        self.config = config.Config(login)
 
         self.lista_przykladow = []
         self.lista_dzialan = []
@@ -112,14 +112,14 @@ class Logic:
 
     def wczytaj_statystyki(self):
         for dzialanie in self.lista_dzialan:
-            self.statistic.append(matrix.Statisctic(self.config, przyklad.Przyklad.dzialanie_string(dzialanie)))
+            self.statistic.append(matrix.Statisctic(self.config, self.login, przyklad.Przyklad.dzialanie_string(dzialanie)))
 
     def zapisz_statystyki(self):
         for statystyka in self.statistic:
             statystyka.save()
         self.statistic.clear()
 
-    def nowa_runda(self, lista_dzialan):
+    def nowa_runda(self, lista_dzialan, login):
         if len(self.statistic) > 0:
             self.zapisz_statystyki()
 
@@ -127,6 +127,7 @@ class Logic:
         self.lista_dzialan = lista_dzialan
         self.akt_dzialanie = None
         self.wynik_uzytkownika = None
+        self.login = login
 
         self.wczytaj_statystyki()
 

@@ -7,6 +7,25 @@
         <property name="label" translatable="yes">Plik</property>
         <property name="tearoff">0</property>
         <child>
+          <object class="tk.Menuitem.Submenu" id="mopt_login">
+            <property name="label" translatable="yes">Login</property>
+            <child>
+              <object class="tk.Menuitem.Command" id="mopt_login_julka">
+                <property name="command">click_on_login_julka</property>
+                <property name="command_id_arg">true</property>
+                <property name="label" translatable="yes">Julka</property>
+              </object>
+            </child>
+            <child>
+              <object class="tk.Menuitem.Command" id="mopt_login_jas">
+                <property name="command">click_on_login_jas</property>
+                <property name="command_id_arg">true</property>
+                <property name="label" translatable="yes">Jas</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
           <object class="tk.Menuitem.Submenu" id="mopt_runda">
             <property name="label" translatable="yes">Nowa runda</property>
             <child>

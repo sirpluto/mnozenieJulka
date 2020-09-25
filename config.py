@@ -35,23 +35,24 @@ class Config():
         'czas_nagrody': 900
     }
 
-    def __init__(self):
+    def __init__(self, login):
+        self.fileName = 'config_{}.json'.format(login)
         self.load()
 
     def load(self):
         try:
-            with open('config.json') as json_file:
+            with open(self.fileName) as json_file:
                 self.config_data = json.load(json_file)
         except (ValueError, FileNotFoundError):
             self.save_default()
             self.load()
 
     def save_default(self):
-        with open('config.json', 'w') as json_file:
+        with open(self.fileName, 'w') as json_file:
             json.dump(self.default_config, json_file)
 
     def save(self):
-        with open('config.json', 'w') as json_file:
+        with open(self.fileName, 'w') as json_file:
             json.dump(self.config_data, json_file)
 
     def add_default_element(self, element, value):

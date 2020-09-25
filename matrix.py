@@ -16,9 +16,9 @@ class Statisctic:
 
     base_matrix = []
 
-    def __init__(self, config, dzialanie):
-        self. matrix_errors_name = "{}_{}{}".format(self.errors_str, dzialanie, self.json_extend_str)
-        self. matrix_total_name = "{}_{}{}".format(self.total_str, dzialanie, self.json_extend_str)
+    def __init__(self, config, login, dzialanie):
+        self. matrix_errors_name = "{}_{}_{}{}".format(self.errors_str, login, dzialanie, self.json_extend_str)
+        self. matrix_total_name = "{}_{}_{}{}".format(self.total_str, login, dzialanie, self.json_extend_str)
         self.load_errors(config)
         self.load_total(config)
 

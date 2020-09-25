@@ -31,7 +31,9 @@ class MyApplication(pygubu.TkApplication):
         # Configure callbacks
         builder.connect_callbacks(self)
 
-        self.logic = logic.Logic()
+        self.logic = None
+
+        self.login = None
 
     def on_entry_wynik_keypress_enter(self, event=None):
         self.click_on_sprawdz()
@@ -43,14 +45,27 @@ class MyApplication(pygubu.TkApplication):
             self.quit()
 
     def nowa_runda(self, lista_dzialan):
-        self.logic.nowa_runda(lista_dzialan)
-        messagebox.showinfo('Nowa runda', 'Czas rozpoczac nowa runde')
-        self.logic.dodaj_przyklady_do_listy()
-        self.logic.wczytaj_przyklad_z_listy()
-        self.wyczysc_wynik()
-        self.wyswietl_label_top(self.logic.komunikat())
-        self.wyswietl_label_l(self.logic.pytanie_dzialanie())
-        self.logic.set_start_time()
+        if self.login == None:
+            messagebox.showinfo('Brak użytkownika', 'Zaloguj sie. Plik->Login')
+        else:
+            self.logic = logic.Logic(self.login)
+            self.logic.nowa_runda(lista_dzialan, self.login)
+            messagebox.showinfo('Nowa runda', 'Czas rozpoczac nowa runde')
+            self.logic.dodaj_przyklady_do_listy()
+            self.logic.wczytaj_przyklad_z_listy()
+            self.wyczysc_wynik()
+            self.wyswietl_label_top(self.logic.komunikat())
+            self.wyswietl_label_l(self.logic.pytanie_dzialanie())
+            self.logic.set_start_time()
+
+    def click_on_login_julka(self, itemid):
+        if itemid == 'mopt_login_julka':
+            self.login = 'julka'
+
+    def click_on_login_jas(self, itemid):
+        if itemid == 'mopt_login_jas':
+            self.login = 'jas'
+
 
     def click_on_runda_mix(self, itemid):
         if itemid == 'mopt_runda_mix':
@@ -82,7 +97,8 @@ class MyApplication(pygubu.TkApplication):
         messagebox.showinfo('O programie', 'To jest prgram dla Julki')
 
     def click_on_nagroda(self):
-        self.logic.nagroda()
+        if not self.logic == None:
+            self.logic.nagroda()
 
     def click_on_sprawdz(self):
 
