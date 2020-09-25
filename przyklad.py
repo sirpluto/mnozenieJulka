@@ -17,12 +17,11 @@ class Przyklad():
 
     @staticmethod
     def mnozenie():
-        return '*'
+        return 'x'
 
     @staticmethod
     def dzielenie():
-        return '/'
-
+        return ':'
     @staticmethod
     def dodawanie():
         return '+'

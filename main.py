@@ -41,7 +41,8 @@ class MyApplication(pygubu.TkApplication):
     def click_on_wyjdz(self, itemid):
         if itemid == 'mopt_wyjdz':
             messagebox.showinfo('Wyjdz', 'Do zobaczenia.')
-            self.logic.wyjdz()
+            if self.logic:
+                self.logic.wyjdz()
             self.quit()
 
     def nowa_runda(self, lista_dzialan):
