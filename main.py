@@ -61,10 +61,12 @@ class MyApplication(pygubu.TkApplication):
 
     def click_on_login_julka(self, itemid):
         if itemid == 'mopt_login_julka':
+            self.wyswietl_canvas_image('images/login/girl_math.gif')
             self.login = 'julka'
 
     def click_on_login_jas(self, itemid):
         if itemid == 'mopt_login_jas':
+            self.wyswietl_canvas_image('images/login/boy_math.gif')
             self.login = 'jas'
 
 
