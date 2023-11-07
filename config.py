@@ -32,7 +32,9 @@ class Config():
         'roznica_duzy_blad': 3,
         'ile_pkt_duzy_blad': 4,
         'ilosc_bledow_przyklad': 3,
-        'czas_nagrody': 900
+        'czas_nagrody': 900,
+        'steam_username': 'username',
+        'steam_password': 'password'
     }
 
     def __init__(self, login):
@@ -134,3 +136,9 @@ class Config():
 
     def get_czas_nagrody(self):
         return self.get_element('czas_nagrody')
+
+    def get_steam_username(self):
+        return self.get_element('steam_username')
+
+    def get_steam_password(self):
+        return self.get_element('steam_password')

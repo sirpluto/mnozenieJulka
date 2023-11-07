@@ -6,6 +6,7 @@ import time
 import play_sound
 import utils
 import emoticon
+from steam_cli import SteamCli
 
 
 class Logic:
@@ -173,8 +174,22 @@ class Logic:
     def nagroda(self, login):
         if not self.runda.czy_nagroda():
             return
-        czasNagrody = self.config.get_czas_nagrody();
-        p = utils.run_game(login)
-        time.sleep(czasNagrody)
-        utils.stop_game(p)
+
+        czasNagrody = self.config.get_czas_nagrody()
+
+        #TODO: add logic
+        use_steam=True
+
+        if use_steam:
+            # TODO: add read avalible games on local steam
+            game = SteamCli('Assetto Corsa Competizione',
+                            self.config.get_steam_username(), self.config.get_steam_password())
+            game.run()
+            time.sleep(czasNagrody)
+            del game
+        else:
+            p = utils.run_game(login)
+            time.sleep(czasNagrody)
+            utils.stop_game(p)
+
         self.runda.set_normal()
