@@ -24,9 +24,9 @@ class SteamCli:
         self.password = password
         self.game_name = game_name
         # TODO: read valid user_id for given username
-        self.user_id = None
         self.client_proc = self.__start_client()
         time.sleep(30)
+        self.user_id = self.__get_logged_user()
         self.game = self.__get_game()
 
 
@@ -47,19 +47,31 @@ class SteamCli:
                 raise e
         return winreg.QueryValueEx(key, "InstallPath")[0]
 
-    def __get_user_id(self):
+    def __get_logged_user(self):
         if ver_os() != "win":
             return None
-        users = steamclient.get_users()
-        matches = (user for user in users if user.id == self.user_id)
+        try:  # 32-bit
+            key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, "Software\\Valve\\Steam\\ActiveProcess")
+        except FileNotFoundError:
+            try:  # 64-bit
+                key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, "Software\\Wow6432Node\\Valve\\Steam\\ActiveProcess")
+            except FileNotFoundError as e:
+                print("Failed to find Steam ActiveProcess directory")
+                raise e
+        return str(int(winreg.QueryValueEx(key, "ActiveUser")[0]))
 
-        return next(matches) if self.user_id else users[0].id
+
+    def __get_all_users_id(self):
+        if ver_os() != "win":
+            return None
+        return steamclient.get_users()
 
     def __get_game(self):
         if ver_os() != "win":
             return None
 
-        games = steamclient.get_games(self.__get_user_id())
+        user = self.user_id if self.user_id else  self.__get_all_users_id()[0]
+        games = steamclient.get_games(user)
         result = None
         for game in games:
             if game.name == self.game_name:
