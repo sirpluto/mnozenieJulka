@@ -19,19 +19,18 @@ if ver_os() == "win":
 
 
 class SteamCli:
-    def __init__(self, game_name, username, password):
-        self.username = username
-        self.password = password
-        self.game_name = game_name
-        # TODO: read valid user_id for given username
-        self.client_proc = self.__start_client()
+    def __init__(self, username, password):
+        self.__username = username
+        self.__password = password
+        self.__game_id = None
+        self.__client_proc = self.__start_client()
         time.sleep(30)
-        self.user_id = self.__get_logged_user()
-        self.game = self.__get_game()
+        self.__user_id = self.__get_logged_user()
+        self.__games_list = self.__get_games()
 
 
     def __del__(self):
-        if self.client_proc:
+        if self.__client_proc:
             self.__stop_client()
 
     @staticmethod
@@ -66,18 +65,12 @@ class SteamCli:
             return None
         return steamclient.get_users()
 
-    def __get_game(self):
+    def __get_games(self):
         if ver_os() != "win":
             return None
 
-        user = self.user_id if self.user_id else  self.__get_all_users_id()[0]
-        games = steamclient.get_games(user)
-        result = None
-        for game in games:
-            if game.name == self.game_name:
-                result = game
-
-        return result
+        user = self.__user_id if self.__user_id else  self.__get_all_users_id()[0]
+        return steamclient.get_games(user)
 
     def __gen_url(self):
         return f'steam://rungameid/{self.game.id}]'
@@ -90,7 +83,7 @@ class SteamCli:
         return process.pid
 
     def __start_client(self):
-        login_params = f"-silent -login {self.username} {self.password}"
+        login_params = f"-silent -login {self.__username} {self.__password}"
         return self.__client_oper(login_params)
 
     def __stop_client(self):
@@ -101,5 +94,28 @@ class SteamCli:
         if ver_os() != "win":
             return None
 
-        run_game_params = f"-applaunch {self.game.id}"
+        if not self.__game_id:
+            return None
+
+        run_game_params = f"-applaunch {self.__game_id}"
         return self.__client_oper(run_game_params)
+
+    def game_list(self):
+        class Object(object):
+            pass
+
+        lst = []
+        for game in self.__games_list:
+            elem = Object()
+            elem.name = game.name
+            elem.id = game.id
+            lst.append(elem)
+
+        return lst
+
+
+    def set_game(self, game_id):
+        if ver_os() != "win":
+            return None
+
+        self.__game_id = game_id

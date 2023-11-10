@@ -181,9 +181,10 @@ class Logic:
         use_steam=True
 
         if use_steam:
-            # TODO: add read avalible games on local steam
-            game = SteamCli('Assetto Corsa Competizione',
-                            self.config.get_steam_username(), self.config.get_steam_password())
+            game = SteamCli(self.config.get_steam_username(), self.config.get_steam_password())
+            lst_game=game.game_list()
+            #TODO: add listbox to select game from list
+            game.set_game(lst_game[0].id)
             game.run()
             time.sleep(czasNagrody)
             del game
