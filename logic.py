@@ -21,6 +21,7 @@ class Logic:
         self.wynik_uzytkownika = None
 
         self.runda = None
+        self.selected_game = None
 
         self.statistic = []
 
@@ -181,10 +182,10 @@ class Logic:
         use_steam=True
 
         if use_steam:
+            if not self.selected_game:
+                return
             game = SteamCli(self.config.get_steam_username(), self.config.get_steam_password())
-            lst_game=game.game_list()
-            #TODO: add listbox to select game from list
-            game.set_game(lst_game[0].id)
+            game.set_game(self.selected_game)
             game.run()
             time.sleep(czasNagrody)
             del game

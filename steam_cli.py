@@ -46,7 +46,8 @@ class SteamCli:
                 raise e
         return winreg.QueryValueEx(key, "InstallPath")[0]
 
-    def __get_logged_user(self):
+    @staticmethod
+    def __get_logged_user():
         if ver_os() != "win":
             return None
         try:  # 32-bit
@@ -59,6 +60,33 @@ class SteamCli:
                 raise e
         return str(int(winreg.QueryValueEx(key, "ActiveUser")[0]))
 
+    @staticmethod
+    def get_installed_games():
+        if ver_os() != "win":
+            return None
+
+        try:  # 32-bit
+            path = "Software\\Valve\\Steam\\Apps"
+            key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, path)
+        except FileNotFoundError:
+            try:  # 64-bit
+                path = "Software\\Wow6432Node\\Valve\\Steam\\Apps"
+                key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, path)
+            except FileNotFoundError as e:
+                print("Failed to find Steam ActiveProcess directory")
+                raise e
+        result = []
+        for i in range(10):
+            try:
+                sub_key_path = winreg.EnumKey(key, i)
+                sub_key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, path + "\\" + sub_key_path)
+                val = winreg.QueryValueEx(sub_key, "Name")[0]
+                if len(val):
+                    result.append(val)
+            except:
+                pass
+
+        return result
 
     def __get_all_users_id(self):
         if ver_os() != "win":
@@ -114,8 +142,11 @@ class SteamCli:
         return lst
 
 
-    def set_game(self, game_id):
+    def set_game(self, game_name):
         if ver_os() != "win":
             return None
 
-        self.__game_id = game_id
+        for game in self.__games_list:
+            if game.name == game_name:
+                self.__game_id = game.id
+

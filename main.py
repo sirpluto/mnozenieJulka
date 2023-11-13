@@ -8,6 +8,7 @@ except:
 import pygubu
 import logic
 import przyklad
+import steam_cli
 
 
 class MyApplication(pygubu.TkApplication):
@@ -27,6 +28,7 @@ class MyApplication(pygubu.TkApplication):
         self.set_menu(menu)
 
         self.canvas = self.builder.get_object('canvas_image')
+        self.wyswietl_liste_nagrod()
 
         # Configure callbacks
         builder.connect_callbacks(self)
@@ -50,6 +52,7 @@ class MyApplication(pygubu.TkApplication):
             messagebox.showinfo('Brak użytkownika', 'Zaloguj sie. Plik->Login')
         else:
             self.logic = logic.Logic(self.login)
+            self.on_liste_nagrod_select(None)
             self.logic.nowa_runda(lista_dzialan, self.login)
             messagebox.showinfo('Nowa runda', 'Czas rozpoczac nowa runde')
             self.logic.dodaj_przyklady_do_listy()
@@ -140,6 +143,16 @@ class MyApplication(pygubu.TkApplication):
         # draw in canvas
         c = self.canvas
         c.create_image(15, 15, anchor='nw', image=img)
+
+    def wyswietl_liste_nagrod(self):
+        lista_nagrod = self.builder.get_object('combobox_lista_nagrod')
+        lista_nagrod.config(values=steam_cli.SteamCli.get_installed_games())
+        lista_nagrod.bind('<<ComboboxSelected>>', self.on_liste_nagrod_select)
+
+    def on_liste_nagrod_select(self, event):
+        if self.logic:
+            self.logic.selected_game = self.builder.get_object('combobox_lista_nagrod').get()
+
 
 if __name__ == '__main__':
     root = tk.Tk()
